@@ -3,217 +3,375 @@
 <head>
 <meta charset="UTF-8">
 <title>For Someone Special</title>
-
 <style>
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+html,body{width:100%;height:100%;overflow-x:hidden;}
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial;
-scroll-behavior:smooth;
-}
-
+/* BACKGROUND */
 body{
-overflow-x:hidden;
-scroll-snap-type:y mandatory;
+  scroll-snap-type:y mandatory;
+  background:linear-gradient(135deg,#a18cd1 0%,#fbc2eb 100%);
+  background-size:400% 400%;
+  animation:gradientShift 15s ease infinite;
 }
+@keyframes gradientShift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 
-/* sections */
-
+/* SECTIONS */
 .section{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:40px;
-scroll-snap-align:start;
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  scroll-snap-align:start;
+}
+.section1,.section2,.section3{
+  background:rgba(255,255,255,0.55);
+  border-radius:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+  width:100%;
+  max-width:600px;
+  padding:25px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
 }
 
-.section1{
-background:linear-gradient(120deg,#1e3c72,#2a5298);
-color:white;
+/* CELEBRATION BACKGROUND IMAGE */
+#celebration .page2Bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  opacity: 0.25;
+  border-radius: 15px;
+  z-index: 1;
 }
 
-.section2{
-background:#fff5f7;
+/* GIFS FOR CELEBRATION */
+#celebration #giphyContainer .giphy {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  opacity: 0;
+  transform: scale(0);
+  animation:giphyPop 0.8s forwards, giphyFloat 4s forwards;
+  z-index:2;
+}
+@keyframes giphyPop {
+  0% { opacity:0; transform:scale(0);}
+  50% { opacity:1; transform:scale(1.2);}
+  100% { opacity:1; transform:scale(1);}
+}
+@keyframes giphyFloat {
+  0% { transform: translateY(0) scale(1); opacity:1; }
+  100% { transform: translateY(-150px) scale(1.1); opacity:0; }
 }
 
-.section3{
-background:linear-gradient(120deg,#ff9a9e,#fad0c4);
+/* FONTS */
+h1,h2{font-family:"Gabriola","Times New Roman",serif;color:#4b3b6b;margin-bottom:10px;}
+p,#typing span,#result{font-family:"Gabriola","Times New Roman",serif;font-size:1.5rem;line-height:1.3;color:#17033d;margin:4px 0;}
+
+/* BUTTONS */
+button{border-radius:50px;padding:12px 40px;}
+.yes{background:#a7289f;color:white;}
+.no{background:#dc3545;color:white;}
+.angryEmoji{margin-left:8px;font-size:1.2rem;transition:transform 0.3s ease;}
+
+/* RESULT */
+#result{margin-top:15px;font-size:30px;color:#4b3b6b;font-weight:700;text-align:center;}
+
+/* IMAGE ROW */
+.imageRow{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0;}
+
+/* MEMORY PHOTOS */
+#typing img{
+  max-width:160px;margin:10px;border-radius:10px;padding:6px;background:white;
+  box-shadow:0 8px 18px rgba(0,0,0,0.25);
+  opacity:0;transform:translateY(20px) scale(0.9) rotate(-3deg);
+  animation:fadeRomantic 0.9s ease forwards;
+  transition:transform .4s;
+}
+#typing img:nth-child(even){transform:translateY(20px) scale(0.9) rotate(3deg);}
+#typing img:hover{transform:scale(1.08) rotate(0deg);}
+@keyframes fadeRomantic{to{opacity:1;transform:translateY(0) scale(1);}}
+
+/* FIREWORKS */
+.fireworks{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;display:none;z-index:10;}
+.spark{position:absolute;width:8px;height:8px;border-radius:50%;animation:explode 1s linear forwards;}
+@keyframes explode{0%{transform:scale(1);opacity:1;}100%{transform:translateY(-200px) scale(0);opacity:0;}}
+
+/* CELEBRATION */
+#celebration{
+  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:linear-gradient(to bottom,#ffecd2,#fcb69f);
+  justify-content:center;align-items:center;flex-direction:column;text-align:center;z-index:20;
+}
+#celebration h1 {
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-family:"Gabriola","Times New Roman",serif;
+  background: linear-gradient(45deg, #ff1493, #ffb400);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:2px 2px 12px rgba(0,0,0,0.3);
+  margin-bottom:0;
+}
+#celebration p {
+  font-size: 3rem;
+  margin:5px 0 0 0;
+  line-height:1;
 }
 
-/* typing effect */
-
-#typing{
-font-size:28px;
-width:60%;
+/* EMOJIS POP */
+.heart,.heart1,.surpriseEmoji
+{
+  display:inline-block;opacity:0;animation:emojiPop 0.9s ease forwards;
 }
+.heart{animation-delay:1.2s;} 
+.heart1{animation-delay:1s;} 
+.surpriseEmoji{animation-delay:1.4s;}
+@keyframes emojiPop{0%{transform:scale(0);opacity:0;}50%{transform:scale(1);opacity:1;}100%{transform:scale(1);opacity:1;}}
 
-/* photos */
-
-.gallery img{
-width:200px;
-margin:10px;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.3);
+/* FLOATING EMOJIS */
+.floatingEmoji{
+  position:absolute;
+  font-size:24px;opacity:0.8;
+  animation:floatUp 4s linear forwards;
 }
+@keyframes floatUp{0%{transform:translateY(0) scale(0); opacity:0;}50%{opacity:1; scale:1;}100%{transform:translateY(-300px) scale(1.2); opacity:0;}}
 
-/* buttons */
-
-button{
-padding:12px 30px;
-font-size:18px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-margin:10px;
+/* FALLING FLOWERS */
+.fallingFlower {
+  position:fixed;
+  top:-50px;
+  font-size:24px;
+  opacity:0.8;
+  animation:fallDown linear forwards;
+  pointer-events:none;
+  z-index:5;
 }
-
-.yes{
-background:#28a745;
-color:white;
+@keyframes fallDown {
+  0% { transform: translateY(0) rotate(0deg); opacity:1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity:0; }
 }
-
-.no{
-background:#dc3545;
-color:white;
-position:relative;
+#result {
+  color: #aa1d74;          
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.3;
+  text-shadow: 2px 2px 8px rgba(255,182,193,0.6);
 }
-
-#result{
-margin-top:30px;
-font-size:30px;
-}
-
-/* fireworks */
-
-.fireworks{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-display:none;
-}
-
-.spark{
-position:absolute;
-width:8px;
-height:8px;
-border-radius:50%;
-animation:explode 1s linear forwards;
-}
-
-@keyframes explode{
-0%{transform:scale(1);opacity:1;}
-100%{transform:translateY(-200px) scale(0);opacity:0;}
-}
-
 </style>
 </head>
-
 <body>
-
 
 <div class="fireworks" id="fireworks"></div>
 
 <!-- PAGE 1 -->
-
 <div class="section section1">
-<h1>Hi... You are here ❤️</h1>
-<p>Scroll down</p>
+<h1 id="line1"></h1>
+<h1 id="line2"></h1>
+<p id="line3"></p>
 </div>
 
 <!-- PAGE 2 -->
-
 <div class="section section2">
-
-<h2>My Message</h2>
-
-<p id="typing"></p>
-
+  <div class="page2Content">
+    <h1>Vishu..</h1>
+    <p id="typing"></p>
+  </div>
 </div>
 
-<!-- PAGE 3 -->
-
+<!-- PAGE 3 BUTTONS -->
 <div class="section section3">
-
 <h1>Will you marry me? 💍</h1>
-
 <button class="yes" onclick="yesAnswer()">Yes</button>
-<button class="no" id="noBtn">No</button>
-
+<button class="no" id="noBtn">No <span class="angryEmoji">😡</span></button>
 <div id="result"></div>
+</div>
 
+<!-- CELEBRATION PAGE -->
+<div id="celebration">
+  <img src="sticker.png" alt="Couple Photo" class="page2Bg">
+  <div id="giphyContainer"></div>
+  <h1 id="celebrationText" ></h1> <!-- Typing text -->
 </div>
 
 <script>
+/* MESSAGE DATA */
+let lines=[
+  {text:"I have been with you for some time now and you make me feel very special."},
+  {text:"It started with our group call and our food dates.",imgs:["call.jpg","food.jpg"]},
+  {text:"You coming in that black shirt to pick me up for a movie where I've completely fallen for you.",img:"bike.jpg"},
+  {text:"The little awkwardness to hold your hands in the theatre and resting my head on your shoulders.",img:"movie.jpg"},
+  {text:"Talking or just the silence... everything is fun and lovely with you.",img:"maggi.jpg"}
+];
+let iLine=0; let typingStarted=false;
 
-/* typing message */
-
-let text="You are the most special person in my life. Every moment with you is beautiful and I want to spend my whole life with you.";
-
-let i=0;
-
-function typing(){
-
-if(i<text.length){
-document.getElementById("typing").innerHTML+=text.charAt(i);
-i++;
-setTimeout(typing,40);
+/* TYPING ANIMATION */
+function typeLine(){
+  if(iLine>=lines.length) return;
+  const elem=document.getElementById("typing");
+  const span=document.createElement("span");
+  elem.appendChild(span);
+  let ci=0;
+  const interval=setInterval(()=>{
+    if(ci<lines[iLine].text.length){span.textContent+=lines[iLine].text.charAt(ci); ci++;}
+    else{
+      clearInterval(interval);
+      if(lines[iLine].img){const img=document.createElement("img"); img.src=lines[iLine].img; elem.appendChild(img); iLine++; setTimeout(typeLine,700);}
+      else if(lines[iLine].imgs){
+        const row=document.createElement("div"); row.className="imageRow"; elem.appendChild(row);
+        lines[iLine].imgs.forEach(src=>{const img=document.createElement("img"); img.src=src; row.appendChild(img);}); 
+        iLine++; setTimeout(typeLine,700);
+      } else{iLine++; setTimeout(()=>{typeLine(); if(iLine>=lines.length){document.querySelector('.section3').scrollIntoView({behavior:'smooth'});} },1000);}
+    }
+  },70);
 }
 
-}
+/* START TYPING WHEN PAGE 2 VISIBLE */
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting && !typingStarted){ typingStarted = true; setTimeout(typeLine,200); }
+  });
+},{threshold:0.5});
+observer.observe(document.querySelector(".section2"));
 
-typing();
-
-/* runaway no button */
-
-let noBtn=document.getElementById("noBtn");
-
+/* RUNAWAY NO BUTTON */
+const noBtn=document.getElementById("noBtn");
 noBtn.addEventListener("mouseover",function(){
-
-let x=Math.random()*300-150;
-let y=Math.random()*200-100;
-
-noBtn.style.transform=`translate(${x}px,${y}px)`;
-
+  const parent=this.parentElement;
+  const maxX=parent.offsetWidth-this.offsetWidth;
+  const maxY=parent.offsetHeight-this.offsetHeight;
+  let x=Math.random()*maxX-maxX/2; let y=Math.random()*maxY-maxY/2;
+  this.style.transform=`translate(${x}px,${y}px)`;
+  createFloatingEmoji("😡",".section3");
 });
 
-/* yes answer */
+/* FLOATING HEARTS */
+function createFloatingEmoji(emoji,container){
+  const div=document.createElement("div");
+  div.className="floatingEmoji";
+  div.textContent=emoji;
+  const parent=document.querySelector(container);
+  div.style.left=Math.random()*80+10+"%";
+  div.style.top="90%";
+  div.style.fontSize=(Math.random()*24+16)+"px";
+  parent.appendChild(div);
+  setTimeout(()=>div.remove(),4000);
+}
 
+/* FALLING FLOWERS */
+function createFallingFlower() {
+  const flowerEmojis = ["🌸","🌺","🌼","🌷","💐"];
+  const flower = document.createElement("div");
+  flower.className = "fallingFlower";
+  flower.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+  flower.style.left = Math.random() * 100 + "vw";
+  flower.style.fontSize = (Math.random() * 24 + 16) + "px";
+  flower.style.animationDuration = (4 + Math.random() * 3) + "s";
+  document.body.appendChild(flower);
+  setTimeout(() => flower.remove(), 7000);
+}
+setInterval(createFallingFlower, 300);
+
+/* CONTINUOUS GIF CONFETTI FOR CELEBRATION */
+const celebrationGiphyUrls = ["dancers.gif","dancers2.gif","dancers3.gif","dancers4.gif"];
+function spawnGiphyConfetti(){
+  const container = document.getElementById("giphyContainer");
+  setInterval(()=>{
+    const giphy = document.createElement("img");
+    giphy.src = celebrationGiphyUrls[Math.floor(Math.random()*celebrationGiphyUrls.length)];
+    giphy.className = "giphy";
+    giphy.style.left = Math.random() * 80 + "vw";
+    giphy.style.top = Math.random() * 60 + "vh";
+    giphy.style.animationDuration = (3 + Math.random()*2) + "s";
+    container.appendChild(giphy);
+    setTimeout(()=>giphy.remove(), 4000);
+  }, 400);
+}
+
+/* PAGE 1 TYPING EFFECT */
+function typeText(element, text, speed, callback){
+  let i = 0;
+  const interval = setInterval(()=>{
+    if(i < text.length){
+      element.textContent += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(interval);
+      if(callback) callback();
+    }
+  }, speed);
+}
+
+const line1 = document.getElementById("line1");
+const line2 = document.getElementById("line2");
+const line3 = document.getElementById("line3");
+
+/* start sequence */
+typeText(line1,"Orey Vishu...",120,()=>{
+  typeText(line2,"You are here ",80,()=>{
+    line2.innerHTML +=
+      '<span class="heart">❤️</span><span class="surpriseEmoji">🤭</span><span class="heart1">❤️</span>';
+    typeText(line3,"Kinda chudu",80);
+  });
+});
+
+/* TYPING EFFECT FOR CELEBRATION */
+function typeCelebrationText() {
+  const text = "I Love You! 💕";
+  const elem = document.getElementById("celebrationText");
+  let i = 0;
+  const speed = 100;
+  const interval = setInterval(() => {
+    if(i < text.length){
+      elem.textContent += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(interval);
+    }
+  }, speed);
+}
+
+/* YES BUTTON */
 function yesAnswer(){
+  document.getElementById("result").innerHTML="Mr. Vamsi Krishna 💖<br>With you, every moment feels delightful,<br>and every tomorrow becomes a day worth cherishing.";
 
-document.getElementById("result").innerHTML=
-"Congratulations ❤️ You won me! 🎉";
+  const fw=document.getElementById("fireworks");
+  fw.style.display="block";
+  for(let j=0;j<80;j++){
+    const s=document.createElement("div");
+    s.className="spark";
+    s.style.left=Math.random()*100+"%";
+    s.style.top=Math.random()*100+"%";
+    s.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    fw.appendChild(s);
+  }
 
-let fw=document.getElementById("fireworks");
+  setTimeout(()=>{
+    fw.style.display="none";
+    const celebration = document.getElementById("celebration");
+    celebration.style.display="flex";
 
-fw.style.display="block";
+    typeCelebrationText(); // Typing effect
 
-for(let i=0;i<80;i++){
+    spawnGiphyConfetti(); // GIF confetti
+  }, 1000);
 
-let spark=document.createElement("div");
-
-spark.className="spark";
-
-spark.style.left=Math.random()*100+"%";
-spark.style.top=Math.random()*100+"%";
-
-spark.style.background=
-`hsl(${Math.random()*360},100%,50%)`;
-
-fw.appendChild(spark);
-
+  // Floating hearts & kisses
+  for(let k=0;k<30;k++){
+    setTimeout(()=>createFloatingEmoji("❤️",".section3"),k*200);
+    setTimeout(()=>createFloatingEmoji("💋",".section3"),k*200);
+  }
 }
-
-}
-
 </script>
-
 </body>
 </html>
